@@ -1,0 +1,25 @@
+{
+  "name": "we-want-you-backend",
+  "version": "1.0.0",
+  "description": "We Want You! backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wewantyou/backend.git"
+  },
+  "author": "WeWantYou!",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wewantyou/backend/issues"
+  },
+  "homepage": "https://github.com/wewantyou/backend#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "nodemailer": "^4.0.1",
+    "sequelize": "^4.5.0"
+  }
+}
