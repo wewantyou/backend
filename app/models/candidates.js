@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     form: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.JSON,
       allowNull: true,
     },
     indication_level: {

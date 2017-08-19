@@ -53,7 +53,7 @@ class CandidatesController {
   listAll (req, res, models) {
     models.Candidates.findAll({})
     .then((candidates) => {
-      if(candidates == null){
+      if(candidates.length == 0) {
         res.json({
           error: true,
           message: "No candidates were found"
@@ -84,9 +84,12 @@ class CandidatesController {
         } else {
           const name = req.body.name
           const form = req.body.form
+          const indicationLevel = req.body.indication_level
 
           candidate.name = name !== undefined ? name : candidate.name
           candidate.form = form !== undefined ? form : candidate.form
+          candidate.indication_level = indicationLevel !== undefined ?
+            indicationLevel : candidate.indication_level
 
           candidate.save()
             .then((candidate) => {
