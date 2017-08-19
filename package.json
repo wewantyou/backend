@@ -16,8 +16,8 @@
     "url": "https://github.com/wewantyou/backend/issues"
   },
   "homepage": "https://github.com/wewantyou/backend#readme",
-  "engine": {
-    "node": "8.1.4"
+  "engines": {
+    "node": "8.1.x"
   },
   "dependencies": {
     "axios": "^0.16.2",
