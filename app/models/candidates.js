@@ -1,29 +1,30 @@
 const Sequelize = require('sequelize')
 
-module.exports = function() => {
-    const candidate = sequelize.define('candidate', {
+module.exports = (sequelize) => {
+    const Candidate = sequelize.define('Candidate', {
 	id: {
-	    type: Sequelize.Integer,
+	    type: Sequelize.INTEGER,
 	    autoIncrement: true,
 	    primaryKey: true
 	},
 	name: {
-	    type: Sequelize.String,
+	    type: Sequelize.STRING,
 	    allowNull: false
-	}
+	},
 	fullContactProfile: {
-	    type: Sequelize.json,
+	    type: Sequelize.JSON,
 	    allowNull: true
 	},
 	email: {
-	    type: Sequelize.String,
+	    type: Sequelize.STRING,
 	    allowNull: false,
 
 	},
 	form: {
-	    type: Sequelize.Integer,
+	    type: Sequelize.INTEGER,
 	    allowNull: true
 	}
 })
-    return candidate
+
+    return Candidate
 }

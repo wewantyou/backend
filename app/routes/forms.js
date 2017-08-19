@@ -2,12 +2,14 @@
 
 const Controller = require('../controllers/forms')
 
-const router = function (app) {
+const router = function (app, models) {
   const controller = new Controller()
 
   app.route('/forms')
     .get(controller.listAll)
-    .post(controller.create)
+    .post((req, res) => {
+      controller.create(req, res, models)
+    })
 }
 
 module.exports = router

@@ -1,14 +1,12 @@
 'use strict'
 
-const FormsSchema = require('../models/forms')
-
 class FormsController {
   listAll (req, res) {
     res.send()
   }
 
-  create (req, res) {
-    FormsSchema.create({
+  create (req, res, models) {
+    models.Forms.create({
       block: req.body,
     })
       .then(() => {
