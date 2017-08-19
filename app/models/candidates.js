@@ -5,15 +5,15 @@ module.exports = (sequelize) => {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     name: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     fullContactProfile: {
       type: Sequelize.JSON,
-      allowNull: true
+      allowNull: true,
     },
     email: {
       type: Sequelize.STRING,
@@ -21,19 +21,23 @@ module.exports = (sequelize) => {
     },
     form: {
       type: Sequelize.INTEGER,
-      allowNull: true
+      allowNull: true,
+    },
+    indication_level: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
     },
     createdAt: {
 	type: Sequelize.DATE,
     },
     updatedAt: {
 	type: Sequelize.DATE,
-    }
+    },
   }, {
     classMethods: {
       associate: function (models) {
 	Candidates.hasOne(models.Forms)
-      }
+      },
     }
   })
 

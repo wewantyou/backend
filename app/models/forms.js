@@ -5,23 +5,23 @@ module.exports = (sequelize) => {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     block: {
       type: Sequelize.JSON,
-      allowNull: false
+      allowNull: false,
     },
     createdAt: {
       type: Sequelize.DATE,
     },
     updatedAt: {
       type: Sequelize.DATE,
-    }
+    },
   }, {
     classMethods: {
       associate: function (models) {
 	Forms.belongsTo(models.Candidates)
-      }
+      },
     }
   })
 
