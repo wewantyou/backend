@@ -23,6 +23,12 @@ module.exports = (sequelize) => {
     form: {
       type: Sequelize.INTEGER,
       allowNull: true
+    },
+    createdAt: {
+	type: Sequelize.DATE,
+    },
+    updatedAt: {
+	type: Sequelize.DATE,
     }
 })
 

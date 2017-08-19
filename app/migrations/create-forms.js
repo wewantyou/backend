@@ -11,6 +11,12 @@ module.exports = {
       block: {
         type: Sequelize.JSON,
         allowNull: false
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
       }
     })
   },
