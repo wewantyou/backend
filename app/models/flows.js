@@ -12,13 +12,13 @@ module.exports = (sequelize) => {
 		order: {
 			type: Sequelize.ARRAY(Sequelize.INTEGER),
 			allowDefault: false,
-		}
+		},
 		createdAt: {
-        	type: Sequelize.DATE,
-      	},
-      	updatedAt: {
-        	type: Sequelize.DATE,
-      	},
+      type: Sequelize.DATE,
+    },
+    updatedAt: {
+      type: Sequelize.DATE,
+    },
 	})
 
 	Flows.associate = (models)	=> {

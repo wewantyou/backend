@@ -59,5 +59,9 @@ module.exports = (sequelize) => {
     },
   })
 
+  Candidates.associate = (models) => {
+    Candidates.hasOne(models.Blocks)
+  }
+
   return Candidates
 }
