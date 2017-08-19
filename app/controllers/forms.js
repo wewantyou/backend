@@ -1,9 +1,6 @@
 'use strict'
 
 class FormsController {
-  listAll (req, res) {
-    res.send()
-  }
 
   create (req, res, models) {
     models.Forms.create({
@@ -39,6 +36,28 @@ class FormsController {
           message: err,
         })
       })
+  }
+  listAll (req, res, models) {
+    models.Forms.findAll({})
+    .then((forms) => {
+      if(forms == null){
+        res.json({
+          error: true,
+          message: "No forms were found"
+        })
+      }else {
+        res.json({
+          error: false,
+          forms
+        })
+      }
+    })
+    .catch((err) => {
+      res.json({
+        error: true,
+        message: err
+      })
+    })
   }
 
   update (req, res, models) {

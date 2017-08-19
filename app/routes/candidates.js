@@ -6,7 +6,9 @@ const router = function (app, models) {
   const controller = new Controller()
 
   app.route('/candidates')
-    .get(controller.listAll)
+    .get((req, res) => {
+      controller.listAll(req, res, models)
+    })
     .post((req, res) => {
       controller.create(req, res, models)
     })

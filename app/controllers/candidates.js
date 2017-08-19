@@ -3,9 +3,6 @@
 const fullContactHelper = require('../helpers/full_contact')
 
 class CandidatesController {
-  listAll (req, res) {
-    res.send()
-  }
 
   async create (req, res, models) {
     const fullContactProfile = await fullContactHelper.find(req.body.email)
@@ -13,7 +10,8 @@ class CandidatesController {
     models.Candidates.create({
       name: req.body.name,
       fullContactProfile: fullContactProfile,
-      email: req.body.email
+      email: req.body.email,
+      form: req.body.form
     })
       .then((candidate) => {
         res.json({
@@ -50,6 +48,29 @@ class CandidatesController {
           message: err,
         })
       })
+  }
+
+  listAll (req, res, models) {
+    models.Candidates.findAll({})
+    .then((candidates) => {
+      if(candidates == null){
+        res.json({
+          error: true,
+          message: "No candidates were found"
+        })
+      }else {
+        res.json({
+          error: false,
+          candidates
+        })
+      }
+    })
+    .catch((err) => {
+      res.json({
+        error: true,
+        message: err
+      })
+    })
   }
 
   update (req, res, models) {
