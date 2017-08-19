@@ -48,6 +48,10 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.JSON),
         defaultValue: [],
       },
+      block: {
+        type: Sequelize.INTEGER,
+        defaultValue: -1,
+      },
       createdAt: {
         type: Sequelize.DATE,
       },

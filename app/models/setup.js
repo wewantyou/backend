@@ -1,7 +1,9 @@
 'use strict'
 
+const Sequelize = require('sequelize')
+
 module.exports = (sequelize) => {
-  const Setup = sequelize.define('Setup', {
+  const Setups = sequelize.define('Setups', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -19,5 +21,5 @@ module.exports = (sequelize) => {
       },
   })
 
-  return Setup
+  return Setups
 }

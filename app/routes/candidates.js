@@ -1,6 +1,7 @@
 'use strict'
 
 const Controller = require('../controllers/candidates')
+const candidatesHelper = require('../helpers/candidates')
 
 const router = function (app, models) {
   const controller = new Controller(models)

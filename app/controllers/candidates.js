@@ -3,11 +3,24 @@
 const fullContactHelper = require('../helpers/full_contact')
 
 let models
-let minPoints = 5
+let minPoints
 
 class CandidatesController {
   constructor (projectModels) {
     models = projectModels
+
+    models.Setups.findById(1)
+      .then((setup) => {
+        if (setup !== null) {
+          minPoints = setup.min_points
+        } else {
+          minPoints = 5
+
+          models.Setups.create({
+            min_points: minPoints,
+          })
+        }
+      })
   }
 
   async create (req, res) {
@@ -172,10 +185,12 @@ class CandidatesController {
             points: 1,
           })
 
-          console.log(candidate.votes)
-
           candidate.update({votes: candidate.votes})
             .then((candidate) => {
+              if (candidatesHelper.checkPoints(candidate, minPoints)) {
+                candidatesHelper.moveToNextBlock(candidate, models)
+              }
+
               res.json({
                 error: false,
                 candidate
@@ -207,6 +222,8 @@ class CandidatesController {
 
           candidate.update({votes: candidate.votes})
             .then((candidate) => {
+              candidatesHelper.checkPoints(candidate)
+
               res.json({
                 error: false,
                 candidate
@@ -231,9 +248,7 @@ class CandidatesController {
             message: `Candidate ${req.params.id} not found`,
           })
         } else {
-          const points = candidate.votes.reduce((total, vote) => {
-            return total + parseInt(vote.points)
-          }, 0)
+          const points = candidatesHelper.getPoints(candidate)
 
           res.json({
             error: false,
