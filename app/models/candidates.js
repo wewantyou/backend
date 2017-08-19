@@ -18,7 +18,6 @@ module.exports = (sequelize) => {
     email: {
       type: Sequelize.STRING,
       allowNull: false,
-
     },
     form: {
       type: Sequelize.INTEGER,
@@ -30,7 +29,13 @@ module.exports = (sequelize) => {
     updatedAt: {
 	type: Sequelize.DATE,
     }
-})
+  }, {
+    classMethods: {
+      associate: function (models) {
+	Candidates.hasOne(models.Forms)
+      }
+    }
+  })
 
   return Candidates
 }
