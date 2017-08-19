@@ -3,23 +3,30 @@
 const Controller = require('../controllers/candidates')
 
 const router = function (app, models) {
-  const controller = new Controller()
+  const controller = new Controller(models)
 
   app.route('/candidates')
-    .get((req, res) => {
-      controller.listAll(req, res, models)
-    })
-    .post((req, res) => {
-      controller.create(req, res, models)
-    })
+    .get(controller.listAll)
+    .post(controller.create)
 
   app.route('/candidates/:id')
-    .get((req, res) => {
-      controller.get(req, res, models)
-    })
-    .put((req, res) => {
-      controller.update(req, res, models)
-    })
+    .get(controller.get)
+    .put(controller.update)
+
+  app.route('/candidates/:id/comments')
+    .post(controller.insertComment)
+
+  app.route('/candidates/:id/like')
+    .post(controller.like)
+
+  app.route('/candidates/:id/superlike')
+    .post(controller.superLike)
+
+  app.route('/candidates/:id/points')
+    .get(controller.getPoints)
+
+  app.route('/candidates/setup')
+    .post(controller.setup)
 }
 
 module.exports = router

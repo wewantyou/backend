@@ -24,9 +24,29 @@ module.exports = {
         type: Sequelize.JSON,
         allowNull: true,
       },
-      indication_level: {
+      github: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      linkedin: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      referral: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      referral_level: {
         type: Sequelize.INTEGER,
         allowNull: true,
+      },
+      comments: {
+        type: Sequelize.JSON,
+        allowNull: true,
+      },
+      votes: {
+        type: Sequelize.ARRAY(Sequelize.JSON),
+        defaultValue: [],
       },
       createdAt: {
         type: Sequelize.DATE,

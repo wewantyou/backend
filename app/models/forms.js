@@ -17,12 +17,6 @@ module.exports = (sequelize) => {
     updatedAt: {
       type: Sequelize.DATE,
     },
-  }, {
-    classMethods: {
-      associate: function (models) {
-	Forms.belongsTo(models.Candidates)
-      },
-    }
   })
 
   return Forms
