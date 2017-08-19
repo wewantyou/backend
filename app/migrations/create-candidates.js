@@ -48,9 +48,9 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.JSON),
         defaultValue: [],
       },
-      block: {
+      BlockId: {
         type: Sequelize.INTEGER,
-        defaultValue: -1,
+        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,

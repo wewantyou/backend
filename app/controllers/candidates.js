@@ -35,6 +35,7 @@ class CandidatesController {
       linkedin: req.body.linkedin,
       referral: req.body.referral,
       referral_level: req.body.referral_level,
+      BlockId: 1,
     })
       .then((candidate) => {
         res.json({

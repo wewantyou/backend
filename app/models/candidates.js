@@ -47,9 +47,9 @@ module.exports = (sequelize) => {
       type: Sequelize.ARRAY(Sequelize.JSON),
       defaultValue: [],
     },
-    block: {
+    BlockId: {
       type: Sequelize.INTEGER,
-      defaultValue: -1,
+      allowNull: false,
     },
     createdAt: {
       type: Sequelize.DATE,
@@ -60,7 +60,7 @@ module.exports = (sequelize) => {
   })
 
   Candidates.associate = (models) => {
-    Candidates.hasOne(models.Blocks)
+    Candidates.belongsTo(models.Blocks)
   }
 
   return Candidates
