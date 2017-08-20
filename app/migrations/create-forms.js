@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true
       },
       block: {
-        type: Sequelize.JSON,
+        type: Sequelize.ARRAY(Sequelize.JSON),
         allowNull: false
       },
       createdAt: {

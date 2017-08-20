@@ -15,6 +15,36 @@ async function find (email) {
   })
 }
 
+function getGithub (profile) {
+  const social = profile.socialProfiles
+
+  for (let i = 0; i < social.length; ++i) {
+    if (social[i].type === 'github' || social[i].typeId === 'github') {
+      return social[i].username
+    }
+  }
+
+  return null
+}
+
+function compareInterests (a, b) {
+  if (a.score < b.score) {
+    return 1
+  } else if (a.score > b.score) {
+    return -1
+  } else {
+    return 0
+  }
+}
+
+function rankInterests (profile) {
+  const interests = profile.macromeasures.interests.slice(0) // clone array
+
+  return interests.sort(compareInterests)
+}
+
 module.exports = {
-  find
+  find,
+  getGithub,
+  rankInterests,
 }

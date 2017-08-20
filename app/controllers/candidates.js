@@ -1,6 +1,7 @@
 'use strict'
 
 const fullContactHelper = require('../helpers/full_contact')
+const githubHelper = require('../helpers/github')
 
 let models
 let minPoints
@@ -24,7 +25,26 @@ class CandidatesController {
   }
 
   async create (req, res) {
+    let user
     const fullContactProfile = await fullContactHelper.find(req.body.email)
+
+    if (req.body.github !== undefined) {
+      fullContactProfile.github = JSON.parse(await githubHelper.find(req.body.github))
+    } else if (user = fullContactHelper.getGithub(fullContactProfile)) {
+      fullContactProfile.github = JSON.parse(await githubHelper.find(user))
+    } else {
+      fullContactProfile.github = JSON.parse(await githubHelper.find(req.body.email))
+    }
+
+    if (fullContactProfile.github.id) {
+      user = fullContactProfile.github.login
+
+      fullContactProfile.github.repos_statistics = await githubHelper.getReposStats(fullContactProfile.github.repos_url)
+    }
+
+    if (fullContactProfile.macromeasures.interests.length > 5) {
+      fullContactProfile.macromeasures.ranked_interests = fullContactHelper.rankInterests(fullContactProfile)
+    }
 
     models.Candidates.create({
       name: req.body.name,
