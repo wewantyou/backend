@@ -6,7 +6,7 @@ const router = function (app, models) {
   const controller = new Controller(models)
 
   app.route('/pool')
-    .get(controller.getNextFromPool)
+    .get(controller.getPool)
 }
 
 module.exports = router

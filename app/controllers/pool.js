@@ -5,11 +5,14 @@ class PoolController {
     models = projectModels
   }
 
-  getNextFromPool (req, res) {
+  getPool (req, res) {
     models.Candidates.findAll({
       where: {
-        BlockId: 1,
+        // BlockId: 1,
       },
+      order: [[
+        'id', 'ASC'
+      ]],
     })
       .then((candidates) => {
         res.json({

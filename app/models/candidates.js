@@ -31,6 +31,10 @@ module.exports = (sequelize) => {
       type: Sequelize.STRING,
       allowNull: true,
     },
+    facebook: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     referral: {
       type: Sequelize.STRING,
       allowNull: true,
@@ -40,7 +44,8 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
     comments: {
-      type: Sequelize.JSON,
+      type: Sequelize.ARRAY(Sequelize.JSON),
+      defaultValue: [],
       allowNull: true,
     },
     votes: {

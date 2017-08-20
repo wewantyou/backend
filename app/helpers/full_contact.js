@@ -18,9 +18,48 @@ async function find (email) {
 function getGithub (profile) {
   const social = profile.socialProfiles
 
+  if (social === undefined) {
+    return null
+  }
+
   for (let i = 0; i < social.length; ++i) {
     if (social[i].type === 'github' || social[i].typeId === 'github') {
       return social[i].username
+    }
+  }
+
+  return null
+}
+
+function getLinkedin (profile) {
+  const social = profile.socialProfiles
+
+  if (social === undefined) {
+    return null
+  }
+
+  for (let i = 0; i < social.length; ++i) {
+    if (social[i].type === 'linkedin' || social[i].typeId === 'linkedin') {
+      return social[i].username
+    }
+  }
+
+  return null
+}
+
+function getFacebook (profile) {
+  const social = profile.socialProfiles
+
+  if (social === undefined) {
+    return null
+  }
+
+  for (let i = 0; i < social.length; ++i) {
+    if (social[i].type === 'facebook' || social[i].typeId === 'facebook') {
+      let url = social[i].url
+      url = url.split('/')
+
+      return url[url.length - 1]
     }
   }
 
@@ -46,5 +85,7 @@ function rankInterests (profile) {
 module.exports = {
   find,
   getGithub,
+  getLinkedin,
+  getFacebook,
   rankInterests,
 }

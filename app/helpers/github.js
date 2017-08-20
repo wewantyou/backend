@@ -11,6 +11,11 @@ function getFullData (user) {
       'User-Agent': 'Request-Promise',
     }
   })
+    .catch((err) => {
+      return {
+        message: 'Not Found',
+      }
+    })
 }
 
 function find (data) {
@@ -31,7 +36,7 @@ function find (data) {
       fullData = data
 
       if (fullData.message === 'Not Found' || fullData === null) {
-        return {}
+        return null
       }
 
       return fullData
@@ -39,7 +44,7 @@ function find (data) {
     .catch((err) => {
       console.log(err)
 
-      return {}
+      return null
     })
 }
 

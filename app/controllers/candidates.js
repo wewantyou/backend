@@ -2,6 +2,7 @@
 
 const fullContactHelper = require('../helpers/full_contact')
 const githubHelper = require('../helpers/github')
+const candidatesHelper = require('../helpers/candidates')
 
 let models
 let minPoints
@@ -13,9 +14,10 @@ class CandidatesController {
     models.Setups.findById(1)
       .then((setup) => {
         if (setup !== null) {
-          minPoints = setup.min_points
+          // minPoints = setup.min_points
+          minPoints = 500
         } else {
-          minPoints = 5
+          minPoints = 500
 
           models.Setups.create({
             min_points: minPoints,
@@ -26,24 +28,43 @@ class CandidatesController {
 
   async create (req, res) {
     let user
-    const fullContactProfile = await fullContactHelper.find(req.body.email)
+    let github = req.body.github
+    let linkedin = req.body.linkedin
+    let facebook = req.body.facebook
+    let fullContactProfile = await fullContactHelper.find(req.body.email)
 
-    if (req.body.github !== undefined) {
-      fullContactProfile.github = JSON.parse(await githubHelper.find(req.body.github))
-    } else if (user = fullContactHelper.getGithub(fullContactProfile)) {
-      fullContactProfile.github = JSON.parse(await githubHelper.find(user))
-    } else {
-      fullContactProfile.github = JSON.parse(await githubHelper.find(req.body.email))
+    if (fullContactProfile === null) {
+      fullContactProfile = {}
     }
 
-    if (fullContactProfile.github.id) {
+    if (github !== undefined) {
+      fullContactProfile.github = JSON.parse(await githubHelper.find(github))
+    } else if (github = fullContactHelper.getGithub(fullContactProfile)) {
+      fullContactProfile.github = JSON.parse(await githubHelper.find(github))
+    } else {
+      fullContactProfile.github = JSON.parse(await githubHelper.find(req.body.email))
+
+      if (fullContactProfile.github !== null) {
+        github = fullContactProfile.github.login
+      }
+    }
+
+    if (fullContactProfile.github && fullContactProfile.github.id) {
       user = fullContactProfile.github.login
 
       fullContactProfile.github.repos_statistics = await githubHelper.getReposStats(fullContactProfile.github.repos_url)
     }
 
-    if (fullContactProfile.macromeasures.interests.length > 5) {
+    if (fullContactProfile.macromeasures && fullContactProfile.macromeasures.interests.length > 5) {
       fullContactProfile.macromeasures.ranked_interests = fullContactHelper.rankInterests(fullContactProfile)
+    }
+
+    if (linkedin === undefined) {
+      linkedin = fullContactHelper.getLinkedin(fullContactProfile)
+    }
+
+    if (facebook === undefined) {
+      facebook = fullContactHelper.getFacebook(fullContactProfile)
     }
 
     models.Candidates.create({
@@ -51,8 +72,9 @@ class CandidatesController {
       fullContactProfile: fullContactProfile,
       email: req.body.email,
       form: req.body.form,
-      github: req.body.github,
-      linkedin: req.body.linkedin,
+      github: github,
+      linkedin: linkedin,
+      facebook: facebook,
       referral: req.body.referral,
       referral_level: req.body.referral_level,
       BlockId: 1,
@@ -161,6 +183,7 @@ class CandidatesController {
   insertComment (req, res) {
     models.Candidates.findById(req.params.id)
       .then((candidate) => {
+        console.log(candidate.comments)
         if (candidate === null) {
           res.json({
             error: true,
@@ -170,12 +193,18 @@ class CandidatesController {
           const author = req.body.author
           const comment = req.body.comment
 
+          if (candidate.comments === null) {
+            candidate.comments = []
+          }
+
+          console.log(candidate.comments)
+
           candidate.comments.push({
             author,
             comment,
           })
 
-          candidate.save()
+          candidate.update({comments: candidate.comments})
             .then((candidate) => {
               res.json({
                 error: false,
